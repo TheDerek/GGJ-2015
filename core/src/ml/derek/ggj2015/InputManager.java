@@ -41,6 +41,9 @@ public class InputManager
 				{
 					Gdx.app.log("input", "Item clicked");
 					item.onClick(room, inventory);
+
+					//Can only click once per frame
+					return;
 				}
 			}
 		}

@@ -53,4 +53,12 @@ public class Item
 	{
 		return size;
 	}
+
+	public void destory(Room room, Array<Item> inventory)
+	{
+		room.getItems().remove(this);
+		inventory.removeValue(this, false);
+		this.texture.getTexture().dispose();
+		this.texture = null;
+	}
 }

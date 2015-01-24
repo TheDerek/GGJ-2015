@@ -2,8 +2,8 @@ package ml.derek.ggj2015.logic;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
 
 /**
  * Created by Derek Sewell on 24/01/15.
@@ -16,7 +16,7 @@ public class Room
 	private TextureRegion background;
 
 	//Items for this room and their corresponding position
-	protected ObjectMap<Item, Vector2> items;
+	protected OrderedMap<Item, Vector2> items;
 
 	//The next room
 	private Room nextRoom;
@@ -24,7 +24,7 @@ public class Room
 	public Room(TextureRegion background)
 	{
 		this.background = background;
-		items = new ObjectMap<Item, Vector2>();
+		items = new OrderedMap<Item, Vector2>();
 	}
 
 	/** Adds an item to the room **/
@@ -38,7 +38,7 @@ public class Room
 		return background;
 	}
 
-	public ObjectMap<Item,Vector2> getItems()
+	public OrderedMap<Item,Vector2> getItems()
 	{
 		return items;
 	}

@@ -14,6 +14,7 @@ public class Item
 {
 	private TextureRegion texture;
 	private Vector2 size;
+	public Vector2 inventoryPosition;
 	private Rectangle boundingBox;
 
 	public Item(TextureRegion texture, Vector2 size)
@@ -34,15 +35,22 @@ public class Item
 		return boundingBox;
 	}
 
+	public Rectangle getBoundingBox(Vector2 position, Vector2 size)
+	{
+		return new Rectangle(position.x, position.y, size.x, size.y);
+	}
+
 	public void onMouseHover()
 	{
 
 	}
 
-	public void onClick(Room room, Array<Item> inventory)
-	{
+	public void onClick(Room room, Array<Item> inventory) {}
 
-	}
+	public void onInventoryClick(Room room, Array<Item> inventory) {}
+
+	public void onUse(Item item, Room room, Array<Item> inventory) {}
+
 
 	public TextureRegion getTexture()
 	{

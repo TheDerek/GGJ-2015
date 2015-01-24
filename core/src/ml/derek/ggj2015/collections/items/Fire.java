@@ -15,12 +15,13 @@ public class Fire extends Item
 {
 	public Fire()
 	{
-		super(new TextureRegion(new Texture("badlogic.jpg")));
+		super(new TextureRegion(new Texture("items/fire.png")));
 	}
 
 	@Override
 	public void onClick(Room room, Array<Item> inventory)
 	{
+		super.onClick(room, inventory);
 		destory(room, inventory);
 	}
 }

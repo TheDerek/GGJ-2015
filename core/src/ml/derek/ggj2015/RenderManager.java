@@ -36,7 +36,8 @@ public class RenderManager
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
-		camera.translate(WIDTH/2, HEIGHT/2);
+		camera.translate(WIDTH / 2, HEIGHT / 2);
+		//camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		img = new Texture("badlogic.jpg");
 	}
 
@@ -66,7 +67,24 @@ public class RenderManager
 			for(Item item : inventory)
 			{
 				batch.draw(item.getTexture(), x + 5, y + 5, 90, 90);
+				if(item.inventoryPosition == null)
+					item.inventoryPosition = new Vector2(x, y);
+				else
+					item.inventoryPosition.set(x, y);
+
 				y -= 100;
+			}
+
+			//Draw the item being carried
+			{
+				if(room.carrying != null)
+				{
+					Vector2 mousePos = Utils.unproject(Gdx.input.getX(), Gdx.input.getY(), camera);
+					batch.draw(room.carrying.getTexture(), mousePos.x - room.carrying.getSize().x/2, mousePos.y - room.carrying.getSize().y/2);
+					//Gdx.input.setCursorCatched(true);
+				}
+
+
 			}
 		}
 		batch.end();

@@ -21,6 +21,9 @@ public class Room
 	//The next room
 	private Room nextRoom;
 
+	//The item we are carrying
+	public Item carrying;
+
 	public Room(TextureRegion background)
 	{
 		this.background = background;

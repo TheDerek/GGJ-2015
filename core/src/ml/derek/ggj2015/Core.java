@@ -7,17 +7,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import ml.derek.ggj2015.collections.rooms.Womb;
+import ml.derek.ggj2015.logic.Event;
 import ml.derek.ggj2015.logic.Item;
 import ml.derek.ggj2015.logic.Room;
+
+import java.util.Queue;
 
 public class Core extends ApplicationAdapter
 {
 	private RenderManager renderManager;
 	private InputManager inputManager;
 
-	private Room currentRoom;
+	private int currentRoom;
 	private Array<Room> rooms;
 	private Array<Item> inventory;
+	private Queue<Event> events;
 
 	@Override
 	public void create()
@@ -29,13 +33,18 @@ public class Core extends ApplicationAdapter
 
 		rooms = new Array<Room>();
 		rooms.add(new Womb());
-		currentRoom = rooms.first();
+		rooms.add(new Womb());
+
+		currentRoom = 0;
 	}
 
 	@Override
 	public void render()
 	{
-		inputManager.update(currentRoom);
-		renderManager.render(currentRoom);
+		if(rooms.get(currentRoom).isFinished())
+			currentRoom++;
+
+		inputManager.update(rooms.get(currentRoom));
+		renderManager.render(rooms.get(currentRoom));
 	}
 }

@@ -24,7 +24,7 @@ public class Fire extends Item
 	{
 		if(item instanceof FireExtinguisher)
 		{
-			//item.destory(room, inventory);
+			item.destory(room, inventory);
 			destory(room, inventory);
 		}
 	}

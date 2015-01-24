@@ -36,6 +36,7 @@ public class InputManager
 			{
 				inventory.add(room.carrying);
 				room.carrying = null;
+				return;
 			}
 
 			//Go through items in the room
@@ -47,12 +48,15 @@ public class InputManager
 				//Check if the item is clicked
 				if(item.getBoundingBox(position).contains(mousePos))
 				{
-					Gdx.app.log("input", "Item clicked");
-					item.onClick(room, inventory);
 
 					if(room.carrying != null)
 					{
+						Gdx.app.log("input", "Item used");
 						item.onUse(room.carrying, room, inventory);
+					} else
+					{
+						Gdx.app.log("input", "Item clicked");
+						item.onClick(room, inventory);
 					}
 
 					//Can only click once per frame

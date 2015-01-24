@@ -18,7 +18,7 @@ public class Room
 	//Items for this room and their corresponding position
 	protected OrderedMap<Item, Vector2> items;
 
-	//The next room
+	//The next room (Not implemented)
 	private Room nextRoom;
 
 	//The item we are carrying

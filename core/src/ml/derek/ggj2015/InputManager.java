@@ -27,7 +27,7 @@ public class InputManager
 
 	public void update(Room room)
 	{
-		if(Gdx.input.isTouched())
+		if(Gdx.input.justTouched())
 		{
 			Vector2 mousePos = Utils.unproject(Gdx.input.getX(), Gdx.input.getY(), camera);
 
@@ -40,6 +40,7 @@ public class InputManager
 				if(item.getBoundingBox(position).contains(mousePos))
 				{
 					Gdx.app.log("input", "Item clicked");
+					item.onClick(room, inventory);
 				}
 			}
 		}

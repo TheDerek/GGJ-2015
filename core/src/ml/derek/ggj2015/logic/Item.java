@@ -3,6 +3,7 @@ package ml.derek.ggj2015.logic;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Derek Sewell on 24/01/15.
@@ -33,17 +34,12 @@ public class Item
 		return boundingBox;
 	}
 
-	public void onAddToInventory()
-	{
-
-	}
-
 	public void onMouseHover()
 	{
 
 	}
 
-	public void onMouseClick()
+	public void onClick(Room room, Array<Item> inventory)
 	{
 
 	}
@@ -51,5 +47,10 @@ public class Item
 	public TextureRegion getTexture()
 	{
 		return texture;
+	}
+
+	public Vector2 getSize()
+	{
+		return size;
 	}
 }

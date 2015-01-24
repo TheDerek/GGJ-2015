@@ -13,6 +13,8 @@ import ml.derek.ggj2015.logic.Room;
 public class Core extends ApplicationAdapter
 {
 	private RenderManager renderManager;
+	private InputManager inputManager;
+
 	private Room currentRoom;
 	private Array<Room> rooms;
 	private Array<Item> inventory;
@@ -20,8 +22,10 @@ public class Core extends ApplicationAdapter
 	@Override
 	public void create()
 	{
-		renderManager = new RenderManager();
 		inventory = new Array<Item>();
+
+		renderManager = new RenderManager(inventory);
+		inputManager = new InputManager(inventory, renderManager.getCamera());
 
 		rooms = new Array<Room>();
 		rooms.add(new Womb());
@@ -31,6 +35,7 @@ public class Core extends ApplicationAdapter
 	@Override
 	public void render()
 	{
+		inputManager.update(currentRoom);
 		renderManager.render(currentRoom);
 	}
 }

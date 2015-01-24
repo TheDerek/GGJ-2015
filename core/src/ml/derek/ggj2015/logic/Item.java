@@ -51,7 +51,6 @@ public class Item
 
 	public void onUse(Item item, Room room, Array<Item> inventory) {}
 
-
 	public TextureRegion getTexture()
 	{
 		return texture;
@@ -64,9 +63,15 @@ public class Item
 
 	public void destory(Room room, Array<Item> inventory)
 	{
+		room.carrying = null;
 		room.getItems().remove(this);
 		inventory.removeValue(this, false);
 		this.texture.getTexture().dispose();
 		this.texture = null;
+	}
+
+	public void setTexture(TextureRegion region)
+	{
+		this.texture = region;
 	}
 }

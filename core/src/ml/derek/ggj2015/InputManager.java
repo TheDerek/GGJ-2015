@@ -31,6 +31,13 @@ public class InputManager
 		{
 			Vector2 mousePos = Utils.unproject(Gdx.input.getX(), Gdx.input.getY(), camera);
 
+			//Check to see if the user is placing an item back in the inventory
+			if(mousePos.x > 1024 && room.carrying != null)
+			{
+				inventory.add(room.carrying);
+				room.carrying = null;
+			}
+
 			//Go through items in the room
 			for(int x = room.getItems().size - 1; x >= 0; x--)
 			{
@@ -42,6 +49,11 @@ public class InputManager
 				{
 					Gdx.app.log("input", "Item clicked");
 					item.onClick(room, inventory);
+
+					if(room.carrying != null)
+					{
+						item.onUse(room.carrying, room, inventory);
+					}
 
 					//Can only click once per frame
 					return;
@@ -62,12 +74,7 @@ public class InputManager
 				}
 			}
 
-			//Check to see if the user is placing an item back in the inventory
-			if(mousePos.x > 1024 && room.carrying != null)
-			{
-				inventory.add(room.carrying);
-				room.carrying = null;
-			}
+
 		}
 	}
 }

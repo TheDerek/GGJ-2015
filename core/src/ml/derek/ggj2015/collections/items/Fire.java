@@ -1,5 +1,6 @@
 package ml.derek.ggj2015.collections.items;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -19,10 +20,13 @@ public class Fire extends Item
 	}
 
 	@Override
-	public void onClick(Room room, Array<Item> inventory)
+	public void onUse(Item item, Room room, Array<Item> inventory)
 	{
-		super.onClick(room, inventory);
-		destory(room, inventory);
+		if(item instanceof FireExtinguisher)
+		{
+			//item.destory(room, inventory);
+			destory(room, inventory);
+		}
 	}
 }
 

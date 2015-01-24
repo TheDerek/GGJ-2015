@@ -11,11 +11,11 @@ import ml.derek.ggj2015.logic.Room;
  * Copyright © 2015 Derek Sewell.
  * All rights reserved.
  */
-public class Key extends Item
+public class FireExtinguisher extends Item
 {
-	public Key()
+	public FireExtinguisher()
 	{
-		super(new TextureRegion(new Texture("items/key.png")));
+		super(new TextureRegion(new Texture("items/fire-extinguisher.png")));
 	}
 
 	@Override

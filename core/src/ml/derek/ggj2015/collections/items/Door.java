@@ -1,5 +1,6 @@
 package ml.derek.ggj2015.collections.items;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -11,33 +12,38 @@ import ml.derek.ggj2015.logic.Room;
  * Copyright © 2015 Derek Sewell.
  * All rights reserved.
  */
-public class Key extends Item
+public class Door extends Item
 {
-	public Key()
+	private boolean open = false;
+
+	public Door()
 	{
-		super(new TextureRegion(new Texture("items/key.png")));
+		super(new TextureRegion(new Texture("items/door.png")));
 	}
 
 	@Override
 	public void onClick(Room room, Array<Item> inventory)
 	{
 		super.onClick(room, inventory);
-		room.getItems().remove(this);
-		//inventory.add(this);
-		room.carrying = this;
+		if(open)
+		{
+			room.finish();
+		}
 	}
 
 	@Override
 	public void onUse(Item item, Room room, Array<Item> inventory)
 	{
-
+		if(item instanceof Key)
+		{
+			//Open the door
+			Gdx.app.log("input", "attempted door use");
+			open = true;
+			setTexture(new TextureRegion(new Texture("items/door-open.png")));
+			item.destory(room, inventory);
+		}
 	}
 
-	public void onInventoryClick(Room room, Array<Item> inventory)
-	{
-		room.carrying = this;
-		inventory.removeValue(this, false);
-	}
 }
 
 

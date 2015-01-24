@@ -24,10 +24,13 @@ public class Room
 	//The item we are carrying
 	public Item carrying;
 
+	private boolean finished;
+
 	public Room(TextureRegion background)
 	{
 		this.background = background;
 		items = new OrderedMap<Item, Vector2>();
+		finished = false;
 	}
 
 	/** Adds an item to the room **/
@@ -44,5 +47,15 @@ public class Room
 	public OrderedMap<Item,Vector2> getItems()
 	{
 		return items;
+	}
+
+	public boolean isFinished()
+	{
+		return finished;
+	}
+
+	public void finish()
+	{
+		finished = true;
 	}
 }

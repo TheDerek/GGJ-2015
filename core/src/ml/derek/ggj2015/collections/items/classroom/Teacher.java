@@ -1,10 +1,9 @@
-package ml.derek.ggj2015.collections.items.sciencefair;
+package ml.derek.ggj2015.collections.items.classroom;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import ml.derek.ggj2015.collections.items.classroom.Rocket;
 import ml.derek.ggj2015.logic.ClickableArea;
 import ml.derek.ggj2015.logic.Item;
 import ml.derek.ggj2015.logic.Room;
@@ -14,12 +13,12 @@ import ml.derek.ggj2015.logic.Room;
  * Copyright © 2015 Derek Sewell.
  * All rights reserved.
  */
-public class Table extends ClickableArea
+public class Teacher extends ClickableArea
 {
 	public Rocket scienceProject;
 	private Vector2 scienceProjectPos;
 
-	public Table()
+	public Teacher()
 	{
 		super();
 	}
@@ -27,23 +26,17 @@ public class Table extends ClickableArea
 	@Override
 	public void onClick(Room room, Array<Item> inventory)
 	{
-		Gdx.app.log("input", "clicked table");
 
-		if(scienceProject != null)
-		{
-			room.carrying = scienceProject;
-			scienceProject = null;
-		}
+
 	}
 
 	@Override
 	public void onUse(Item item, Room room, Array<Item> inventory)
 	{
-		if(item instanceof Rocket)
+		if(item instanceof Rocket && ((Rocket) item).first)
 		{
-			scienceProject = (Rocket) item;
-			room.carrying = null;
-
+			item.destory(room, inventory);
+			room.carrying = new Diploma();
 		}
 	}
 

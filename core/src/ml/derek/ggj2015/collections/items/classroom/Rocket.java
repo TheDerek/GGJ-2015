@@ -11,9 +11,17 @@ import ml.derek.ggj2015.logic.Item;
  */
 public class Rocket extends Item
 {
+	public boolean first = false;
 	public Rocket()
 	{
 		super(new TextureRegion(new Texture("items/classroom/rocket.png")));
+	}
+
+	public void setFirstPlace()
+	{
+		first = true;
+		getTexture().getTexture().dispose();
+		setTexture(new TextureRegion(new Texture("items/classroom/rocket-first-place.png")));
 	}
 
 

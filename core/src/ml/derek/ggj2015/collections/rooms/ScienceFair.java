@@ -21,9 +21,9 @@ public class ScienceFair extends Room
 	public ScienceFair(RoomSwitcher roomSwitcher)
 	{
 		super(new TextureRegion(new Texture("backgrounds/sciencefair.png")), roomSwitcher);
-		putArea(new Table(), new Vector2(218, 373), new Vector2(625, 648));
+		putAreaSize(new Table(), new Vector2(253, 289), new Vector2(356, 357));
 		putAreaSize(new GatewayArea(ClassRoom.class, roomSwitcher), new Vector2(109, 0), new Vector2(227, 280));
-		putAreaSize(new Judge(), new Vector2(352, 0), new Vector2(193, 383));
+		putAreaSize(new Judge(), new Vector2(352, 0), new Vector2(193, 274));
 	}
 
 }

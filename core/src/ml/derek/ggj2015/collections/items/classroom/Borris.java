@@ -36,8 +36,6 @@ public class Borris extends Item
 	{
 		if(item instanceof Paper)
 		{
-			//Open the door
-			Gdx.app.log("input", "attempted door use");
 			happy = true;
 			setTexture(new TextureRegion(new Texture("items/classroom/borris-happy.png")));
 			item.destory(room, inventory);

@@ -57,7 +57,7 @@ public class Core extends ApplicationAdapter
 		};
 
 		rooms = new Array<Room>();
-		rooms.add(new Womb(roomSwitcher));
+		//rooms.add(new Womb(roomSwitcher));
 		rooms.add(new ClassRoom(roomSwitcher));
 		rooms.add(new ScienceFair(roomSwitcher));
 
@@ -68,8 +68,9 @@ public class Core extends ApplicationAdapter
 	public void render()
 	{
 		Room room = rooms.get(currentRoom);
-		if(room.music != null && !room.music.isPlaying())
-			room.music.play();
+
+		if(currentMusic != null && !currentMusic.isPlaying())
+			currentMusic.play();
 
 		if(room.isFinished())
 		{

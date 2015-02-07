@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import ml.derek.ggj2015.collections.items.classroom.Cash;
 import ml.derek.ggj2015.collections.items.classroom.Rocket;
 import ml.derek.ggj2015.logic.ClickableArea;
@@ -36,7 +37,24 @@ public class Judge extends ClickableArea
 	{
 		if(item instanceof Cash)
 		{
-			item.destory(room, inventory);
+			Table table = null;
+
+			for(ObjectMap.Entry<Item, Vector2> pair : room.getItems())
+			{
+				Item roomItem = pair.key;
+				if(roomItem instanceof Table)
+				{
+					table = (Table) roomItem;
+				}
+			}
+
+			if(table != null && table.scienceProject != null)
+			{
+				table.scienceProject.setFirstPlace();
+				//finally destroy the cash
+				item.destory(room, inventory);
+			}
+
 		}
 	}
 

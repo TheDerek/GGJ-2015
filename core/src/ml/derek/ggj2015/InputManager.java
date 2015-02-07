@@ -17,11 +17,15 @@ import ml.derek.ggj2015.logic.Room;
 public class InputManager
 {
 	private Array<Item> inventory;
+	private Array<Item> combineSpace;
 	private OrthographicCamera camera;
 
-	public InputManager(Array<Item> inventory, OrthographicCamera camera)
+	public static final Vector2 ITEM_SIZE = new Vector2(100, 100);
+
+	public InputManager(Array<Item> inventory, Array<Item> combineSpace, OrthographicCamera camera)
 	{
 		this.inventory = inventory;
+		this.combineSpace = combineSpace;
 		this.camera = camera;
 	}
 
@@ -32,11 +36,32 @@ public class InputManager
 			Vector2 mousePos = Utils.unproject(Gdx.input.getX(), Gdx.input.getY(), camera);
 
 			//Check to see if the user is placing an item back in the inventory
-			if(mousePos.x > 1024 && room.carrying != null)
+			if(mousePos.x > RenderManager.WIDTH - 100 && room.carrying != null)
 			{
-				inventory.add(room.carrying);
-				room.carrying = null;
-				return;
+				if(mousePos.y > 200)
+				{
+					inventory.add(room.carrying);
+					room.carrying = null;
+					return;
+				} else if (combineSpace.size < 2)
+				{
+					combineSpace.add(room.carrying);
+					Item item = room.carrying;
+					room.carrying = null;
+
+					//Check if another item is already there and if so combine!
+					if(combineSpace.size == 2)
+					{
+						Gdx.app.log("input", "Attempting combine");
+						item.onCombine(room, combineSpace.first(), combineSpace, inventory);
+
+						//Size will change if combined, we can ignore what happens next
+						if(combineSpace.size == 2)
+							combineSpace.first().onCombine(room, item, combineSpace, inventory);
+					}
+
+					return;
+				}
 			}
 
 			//Go through items in the room
@@ -64,20 +89,38 @@ public class InputManager
 				}
 			}
 
-			//Go through items in the inventory
-			for(Item item : inventory)
+			//Can't interact with the inventory if we are carrying something
+			if(room.carrying == null)
 			{
-				//Check if the item is clicked
-				if(item.getBoundingBox(item.inventoryPosition, new Vector2(100, 100)).contains(mousePos))
+				//Go through items in the inventory
+				for (Item item : inventory)
 				{
-					Gdx.app.log("input", "Inventory Item clicked");
-					item.onInventoryClick(room, inventory);
+					//Check if the item is clicked
+					if (item.getBoundingBox(item.inventoryPosition, ITEM_SIZE).contains(mousePos))
+					{
+						Gdx.app.log("input", "Inventory Item clicked");
+						item.onInventoryClick(room, inventory);
 
-					//Can only click once per frame
-					return;
+						//Can only click once per frame
+						return;
+					}
+				}
+
+				//Go through items in the combine space
+				for (Item item : combineSpace)
+				{
+					//Check if the item is clicked
+					if (item.getBoundingBox(item.inventoryPosition, ITEM_SIZE).contains(mousePos))
+					{
+						Gdx.app.log("input", "Inventory Item clicked");
+						item.onCombineSpaceClick(room, combineSpace);
+
+
+						//Can only click once per frame
+						return;
+					}
 				}
 			}
-
 
 		}
 	}

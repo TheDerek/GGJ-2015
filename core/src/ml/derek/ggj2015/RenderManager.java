@@ -1,6 +1,7 @@
 package ml.derek.ggj2015;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,6 +23,7 @@ public class RenderManager
 {
 	public static final int WIDTH = 1124;
 	public static final int HEIGHT = 768;
+	public static final int BORDER = 5;
 
 	private SpriteBatch batch;
 	private ShapeRenderer shapeRenderer;
@@ -29,10 +31,13 @@ public class RenderManager
 	private Texture img;
 	private OrthographicCamera camera;
 	private Array<Item> inventory;
+	private Array<Item> combineSpace;
 
-	public RenderManager(Array<Item> inventory)
+	public RenderManager(Array<Item> inventory, Array<Item> combineSpace)
 	{
 		this.inventory = inventory;
+		this.combineSpace = combineSpace;
+
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
@@ -49,6 +54,15 @@ public class RenderManager
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 
+
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+		{
+			shapeRenderer.setColor(Color.ORANGE);
+			shapeRenderer.rect(WIDTH - 100 + BORDER, BORDER, 100 - BORDER*2, 100 - BORDER*2);
+			shapeRenderer.rect(WIDTH - 100 + BORDER, 100 + BORDER, 100 - BORDER*2, 100 - BORDER*2);
+		}
+		shapeRenderer.end();
+
 		batch.begin();
 		{
 			batch.draw(room.getBackground(), 0, 0);
@@ -58,7 +72,8 @@ public class RenderManager
 			{
 				Item item = itemPair.key;
 				Vector2 position = itemPair.value;
-				batch.draw(item.getTexture(), position.x, position.y);
+				item.draw(batch, position);
+
 			}
 
 			//Draw the inventory
@@ -66,13 +81,28 @@ public class RenderManager
 			float y = HEIGHT - 100;
 			for(Item item : inventory)
 			{
-				batch.draw(item.getTexture(), x + 5, y + 5, 90, 90);
+				batch.draw(item.getTexture(), x + BORDER, y + BORDER, 100 - BORDER*2, 100 - BORDER*2);
 				if(item.inventoryPosition == null)
 					item.inventoryPosition = new Vector2(x, y);
 				else
 					item.inventoryPosition.set(x, y);
 
 				y -= 100;
+			}
+
+			//Draw the combined space (below the inventory)
+			//Draw the inventory
+			x = WIDTH - 100;
+			y = 0;
+			for(Item item : combineSpace)
+			{
+				batch.draw(item.getTexture(), x + BORDER, y + BORDER, 100 - BORDER*2, 100 - BORDER*2);
+				if(item.inventoryPosition == null)
+					item.inventoryPosition = new Vector2(x, y);
+				else
+					item.inventoryPosition.set(x, y);
+
+				y += 100;
 			}
 
 			//Draw the item being carried
